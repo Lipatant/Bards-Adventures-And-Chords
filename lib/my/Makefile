@@ -25,6 +25,8 @@ OBJ	=	$(SRC:.c=.o)
 
 NAME	=	libmy.a
 
+LOGSFILE	=	logs.txt
+
 all:	$(NAME)
 
 $(NAME):	$(OBJ)

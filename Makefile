@@ -5,7 +5,11 @@
 ## Makefile de Bard: Adventures and Chors
 ##
 
-SRC	=	../main.c
+SRC	=	../main.c															\
+	engine/window/create.c													\
+	engine/window/destroy.c													\
+	engine/window/destroy/all.c												\
+	start.c																	\
 
 BUILDDIR = build
 
@@ -30,27 +34,29 @@ GCCFLAG	=	gcc -o
 
 FDEBUG	=	-g3
 
+LOGSFILE	=	logs.txt
+
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	$(MAKE) -C lib/my/
-	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS)
+	$(MAKE) -C lib/my/ > $(LOGSFILE)
+	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) >> $(LOGSFILE)
 
 debug:	$(OBJ)
-	$(MAKE) -C lib/my/
-	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) $(FDEBUG)
+	$(MAKE) -C lib/my/ > $(LOGSFILE)
+	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) $(FDEBUG) >> $(LOGSFILE)
 
 debug_play:	fclean debug
 	clear
 	valgrind --track-origins=yes ./$(NAME)
 
 clean:
-	$(MAKE) clean -C lib/my/
-	$(RM) -f $(OBJ)
+	$(MAKE) clean -C lib/my/ > $(LOGSFILE)
+	$(RM) -f $(OBJ) >> $(LOGSFILE)
 
 fclean: clean
-	$(MAKE) fclean -C lib/my/
-	$(RM) -f $(NAME)
+	$(MAKE) fclean -C lib/my/ >> $(LOGSFILE)
+	$(RM) -f $(NAME) >> $(LOGSFILE)
 
 play:	$(NAME)
 	./$(NAME)
