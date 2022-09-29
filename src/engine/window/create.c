@@ -8,13 +8,15 @@
 #include "engine.h"
 #include <SFML/Graphics/RenderWindow.h>
 
-void store_in_window_layer(int const window_layer, sfRenderWindow *window)
+static void store_in_window_layer(int const window_layer, sfRenderWindow *window)
 {
-    if (window_layer == WINDOW_LAYER_NONE || window_layer < 0 || window_layer >= WINDOW_LAYER_TOTAL)
+    if (!engine_window_layer_is_valid(window_layer))
         return;
-    if (ENGINE.window.render_window[window_layer] != NULL)
-        sfRenderWindow_destroy(ENGINE.window.render_window[window_layer]);
-    ENGINE.window.render_window[window_layer] = window;
+    if (ENGINE.windows[window_layer].render_window != NULL)
+        sfRenderWindow_destroy(ENGINE.windows[window_layer].render_window);
+    ENGINE.windows[window_layer].render_window = window;
+    ENGINE.windows[window_layer].has_focus = DEFAULT_WINDOW_FOCUS;
+    ENGINE.windows[window_layer].had_focus = DEFAULT_WINDOW_FOCUS;
 }
 
 sfRenderWindow *engine_window_create(int const window_layer)

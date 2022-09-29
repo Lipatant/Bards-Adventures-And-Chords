@@ -6,9 +6,17 @@
 ##
 
 SRC	=	../main.c															\
+	engine/loaded_map/create.c												\
+	engine/loaded_map/display.c												\
+	engine/loaded_map/free.c												\
+	engine/map/create.c														\
+	engine/map/free.c														\
+	engine/sprite/destroy.c													\
+	engine/tilemap/reset.c													\
 	engine/window/create.c													\
 	engine/window/destroy.c													\
 	engine/window/destroy/all.c												\
+	engine/window/layer/is_valid.c											\
 	start.c																	\
 
 BUILDDIR = build

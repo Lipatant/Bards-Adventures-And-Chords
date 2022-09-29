@@ -12,8 +12,8 @@ void engine_window_destroy(int const window_layer)
 {
     if (window_layer == WINDOW_LAYER_NONE || window_layer < 0 || window_layer >= WINDOW_LAYER_TOTAL)
         return;
-    if (ENGINE.window.render_window[window_layer] == NULL)
+    if (ENGINE.windows[window_layer].render_window == NULL)
         return;
-    sfRenderWindow_destroy(ENGINE.window.render_window[window_layer]);
-    ENGINE.window.render_window[window_layer] = NULL;
+    sfRenderWindow_destroy(ENGINE.windows[window_layer].render_window);
+    ENGINE.windows[window_layer].render_window = NULL;
 }
