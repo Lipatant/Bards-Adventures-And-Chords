@@ -68,18 +68,22 @@ int start(int const ac, char * const *av, char * const *env)
             my_putdouble(fps, 2);
             my_putstr("\n");
         }
-        float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
+        float speed = (float)(5) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
         if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            position.y -= speed;
+            position.x -= speed;
+            position.y += speed;
         }
         if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            position.y += speed;
+            position.x += speed;
+            position.y -= speed;
         }
         if (sfKeyboard_isKeyPressed(sfKeyUp)) {
             position.x -= speed;
+            position.y -= speed;
         }
         if (sfKeyboard_isKeyPressed(sfKeyDown)) {
             position.x += speed;
+            position.y += speed;
         }
         sfRenderWindow_clear(ENGINE.default_window->render_window, sfBlack);
         engine_loaded_map_display(loaded_map, WINDOW_LAYER_DEFAULT_WINDOW, position, VIEW_ANGLE_0);

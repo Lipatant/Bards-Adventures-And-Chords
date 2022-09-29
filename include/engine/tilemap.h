@@ -8,8 +8,10 @@
 #pragma once
     #define TILE_DEFAULT 9
     #define TILE_HEIGHT 10
-    #define TILEMAP_MAX_X 200
-    #define TILEMAP_MAX_Y 200
+    #define TILE_FLAT_X 16
+    #define TILE_FLAT_Y 8
+    #define TILEMAP_MAX_X 100
+    #define TILEMAP_MAX_Y 100
     #define TILEMAP_MAX_Z 20
 
     #include <SFML/System/Vector2.h>

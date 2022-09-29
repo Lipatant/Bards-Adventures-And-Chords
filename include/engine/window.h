@@ -14,8 +14,6 @@
     #define DEFAULT_WINDOW_COLOR sfBlack
     #define DEFAULT_WINDOW_FPS 120
     #define DEFAULT_WINDOW_FOCUS true
-    #define DEFAULT_WINDOW_SCREEN_X 1920
-    #define DEFAULT_WINDOW_SCREEN_Y 1080
     #define DEFAULT_WINDOW_PARAMS sfClose | sfResize
 
 enum window_layers_indices {
@@ -36,6 +34,7 @@ typedef struct window_layers_s {
 } window_layers_t;
 
 static const char DEFAULT_WINDOW_NAME[] = "Bards";
+static const sfVector2u DEFAULT_WINDOW_RESOLUTION = {256, 224};
 
 // Returns the generated RenderWindow
 // Returns NULL if a problem is encountered

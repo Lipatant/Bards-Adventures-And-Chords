@@ -36,6 +36,7 @@ sfRenderWindow *engine_window_create(int const window_layer)
         return NULL;
     sfRenderWindow_setMouseCursorVisible(window, sfTrue);
     sfRenderWindow_setFramerateLimit(window, DEFAULT_WINDOW_FPS);
+    sfRenderWindow_setSize(window, DEFAULT_WINDOW_RESOLUTION);
     sfRenderWindow_clear(window, DEFAULT_WINDOW_COLOR);
     sfRenderWindow_display(window);
     store_in_window_layer(window_layer, window);
