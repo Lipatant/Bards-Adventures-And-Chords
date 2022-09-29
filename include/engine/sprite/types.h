@@ -12,4 +12,5 @@
 typedef struct sprite_s {
     sfSprite *sprite;
     sfTexture *texture;
+    sfVector2u texture_size;
 } sprite_t;

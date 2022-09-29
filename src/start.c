@@ -44,62 +44,20 @@ int engine_window_poll_events(int const window_layer)
     return returned;
 }
 
-static void draw_terrain(window_layers_t *window, sfSprite *sprite, sfTexture *texture, map_t *map, sfVector2f original_position)
-{
-    sfVector2f scale = {1, 1};
-    sfVector2f position = original_position;
-    sfIntRect texture_rect = {0, 0, TILE_TEXTURES_SIZE.x, TILE_TEXTURES_SIZE.y};
-    sfVector2u texture_size = {0, 0};
-    float vertical_position = 0;
-    int additional_random = 1;
-
-    if (window->render_window == NULL || sprite == NULL || texture == NULL || map == NULL)
-        return;
-    texture_size = sfTexture_getSize(texture);
-    sfSprite_setScale(sprite, scale);
-    for (int x = 0; x < TILEMAP_MAX_X; x++) {
-        position.x = original_position.x + (texture_rect.width - TILE_TEXTURES_OFFSET.x) * scale.x * -0.5 * (x % 2);
-        for (int y = 0 - (y % 2); y < TILEMAP_MAX_Y; y++) {
-            vertical_position = position.y;
-            for (int z = 0; z < TILEMAP_MAX_Z; z++) {
-                texture_rect.left = (map->tilemap.tile[x][y][z] % (texture_size.x / TILE_TEXTURES_SIZE.x)) * TILE_TEXTURES_SIZE.x;
-                texture_rect.top = (map->tilemap.tile[x][y][z] / (texture_size.x / TILE_TEXTURES_SIZE.x)) * TILE_TEXTURES_SIZE.y;
-                if (map->tilemap.tile[x][y][z] != TILE_DEFAULT) {
-                    sfSprite_setPosition(sprite, position);
-                    sfSprite_setTextureRect(sprite, texture_rect);
-                    sfRenderWindow_drawSprite(window->render_window, sprite, NULL);
-                }
-                position.y -= TILE_HEIGHT * scale.y;
-            }
-            position.x += (texture_rect.width - TILE_TEXTURES_OFFSET.x) * scale.x;
-            position.y = vertical_position;
-        }
-        position.y += 4 * scale.y;
-    }
-}
-
 int start(int const ac, char * const *av, char * const *env)
 {
-    sfTexture *texture = NULL;
-    sfSprite *sprite = NULL;
-    map_t *map = NULL;
-    sfVector2f position = {0, 0};
+    loaded_map_t *loaded_map = NULL;
+    position_t position = {0, 0, 0};
 
     engine_window_create(WINDOW_LAYER_DEFAULT_WINDOW);
     ENGINE.default_window = &ENGINE.windows[WINDOW_LAYER_DEFAULT_WINDOW];
     if (ENGINE.windows[WINDOW_LAYER_MAIN_GAME].render_window == NULL)
         return RETURNED_EXIT;
-    texture = sfTexture_createFromFile("terrain.png", NULL);
-    if (texture != NULL) {
-        sprite = sfSprite_create();
-        if (sprite != NULL)
-            sfSprite_setTexture(sprite, texture, sfTrue);
-    }
     ENGINE.delta = 0;
     ENGINE.delta_clock = sfClock_create();
     ENGINE.seconds_clock = sfClock_create();
     ENGINE.seconds_time = 0;
-    map = engine_map_create();
+    loaded_map = engine_loaded_map_create();
     while (sfRenderWindow_isOpen(ENGINE.default_window->render_window)) {
         engine_window_poll_events(WINDOW_LAYER_DEFAULT_WINDOW);
         if (ENGINE.delta_clock != NULL)
@@ -110,28 +68,28 @@ int start(int const ac, char * const *av, char * const *env)
             my_putdouble(fps, 2);
             my_putstr("\n");
         }
-        float speed = (float)(1000) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
-        if (sfKeyboard_isKeyPressed(sfKeyLeft))
-            position.x += speed;
-        if (sfKeyboard_isKeyPressed(sfKeyRight))
-            position.x -= speed;
-        if (sfKeyboard_isKeyPressed(sfKeyUp))
-            position.y += speed;
-        if (sfKeyboard_isKeyPressed(sfKeyDown))
+        float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
+        if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
             position.y -= speed;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+            position.y += speed;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyUp)) {
+            position.x -= speed;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyDown)) {
+            position.x += speed;
+        }
         sfRenderWindow_clear(ENGINE.default_window->render_window, sfBlack);
-        draw_terrain(ENGINE.default_window, sprite, texture, map, position);
+        engine_loaded_map_display(loaded_map, WINDOW_LAYER_DEFAULT_WINDOW, position, VIEW_ANGLE_0);
         sfRenderWindow_display(ENGINE.default_window->render_window);
     }
-    if (texture != NULL)
-        sfTexture_destroy(texture);
-    if (sprite != NULL)
-        sfSprite_destroy(sprite);
     if (ENGINE.delta_clock != NULL)
         sfClock_destroy(ENGINE.delta_clock);
     if (ENGINE.seconds_clock != NULL)
         sfClock_destroy(ENGINE.seconds_clock);
+    engine_loaded_map_free(loaded_map);
     engine_window_destroy_all();
-    engine_map_free(map);
     return RETURNED_EXIT;
 }

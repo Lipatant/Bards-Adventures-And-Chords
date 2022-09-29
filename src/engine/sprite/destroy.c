@@ -6,14 +6,15 @@
 */
 
 #include "engine/sprite.h"
+#include <stdlib.h>
 
 void engine_sprite_destroy(sprite_t *sprite)
 {
     if (sprite == NULL)
-        return NULL;
+        return;
     if (sprite->sprite != NULL)
         sfSprite_destroy(sprite->sprite);
     if (sprite->texture != NULL)
-        sfTexture_destroy(sprite->sprite);
+        sfTexture_destroy(sprite->texture);
     free(sprite);
 }

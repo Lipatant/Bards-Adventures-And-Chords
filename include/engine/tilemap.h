@@ -10,7 +10,7 @@
     #define TILE_HEIGHT 10
     #define TILEMAP_MAX_X 200
     #define TILEMAP_MAX_Y 200
-    #define TILEMAP_MAX_Z 100
+    #define TILEMAP_MAX_Z 20
 
     #include <SFML/System/Vector2.h>
 

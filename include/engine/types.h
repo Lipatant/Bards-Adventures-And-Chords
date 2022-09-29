@@ -13,3 +13,9 @@ typedef struct position_s {
     double y;
     double z;
 } position_t;
+
+typedef struct position_tile_s {
+    int x;
+    int y;
+    int z;
+} position_tile_t;

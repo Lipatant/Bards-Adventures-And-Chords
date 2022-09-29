@@ -7,6 +7,7 @@
 
 #include "engine.h"
 #include <SFML/Graphics/RenderWindow.h>
+#include <SFML/Graphics/View.h>
 
 static void store_in_window_layer(int const window_layer, sfRenderWindow *window)
 {
@@ -14,9 +15,14 @@ static void store_in_window_layer(int const window_layer, sfRenderWindow *window
         return;
     if (ENGINE.windows[window_layer].render_window != NULL)
         sfRenderWindow_destroy(ENGINE.windows[window_layer].render_window);
+    if (ENGINE.windows[window_layer].view != NULL)
+        sfView_destroy(ENGINE.windows[window_layer].view);
     ENGINE.windows[window_layer].render_window = window;
     ENGINE.windows[window_layer].has_focus = DEFAULT_WINDOW_FOCUS;
     ENGINE.windows[window_layer].had_focus = DEFAULT_WINDOW_FOCUS;
+    ENGINE.windows[window_layer].view = NULL;
+    ENGINE.windows[window_layer].view_size.x = 0;
+    ENGINE.windows[window_layer].view_size.y = 0;
 }
 
 sfRenderWindow *engine_window_create(int const window_layer)

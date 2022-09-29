@@ -6,13 +6,13 @@
 */
 
 #pragma once
+    #include <SFML/Graphics/Color.h>
     #include <SFML/Graphics/Types.h>
     #include <SFML/Window/Window.h>
-    #include <SFML/Graphics/Color.h>
     #include <stdbool.h>
 
     #define DEFAULT_WINDOW_COLOR sfBlack
-    #define DEFAULT_WINDOW_FPS 60
+    #define DEFAULT_WINDOW_FPS 120
     #define DEFAULT_WINDOW_FOCUS true
     #define DEFAULT_WINDOW_SCREEN_X 1920
     #define DEFAULT_WINDOW_SCREEN_Y 1080
@@ -29,6 +29,8 @@ enum window_layers_indices {
 // Contains a WINDOW_LAYER_TOTAL amount of sfRenderWindows (1)
 typedef struct window_layers_s {
     sfRenderWindow *render_window;
+    sfView *view;
+    sfVector2f view_size;
     bool has_focus;
     bool had_focus;
 } window_layers_t;
@@ -44,3 +46,6 @@ void engine_window_destroy_all(void);
 // Returns true if the layer is valid
 // Otherwise, returns false
 bool engine_window_layer_is_valid(int const window_layer);
+// Returns the updated view
+// Otherwise, returns false
+sfView *engine_window_update_view(int const window_layer);
