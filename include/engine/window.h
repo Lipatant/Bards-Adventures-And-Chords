@@ -7,6 +7,7 @@
 
 #pragma once
     #include <SFML/Graphics/Color.h>
+    #include <SFML/Graphics/Rect.h>
     #include <SFML/Graphics/Types.h>
     #include <SFML/Window/Window.h>
     #include <stdbool.h>
@@ -27,7 +28,9 @@ enum window_layers_indices {
 // Contains a WINDOW_LAYER_TOTAL amount of sfRenderWindows (1)
 typedef struct window_layers_s {
     sfRenderWindow *render_window;
+    sfVector2u render_window_size;
     sfView *view;
+    sfFloatRect view_rect;
     sfVector2f view_size;
     bool has_focus;
     bool had_focus;

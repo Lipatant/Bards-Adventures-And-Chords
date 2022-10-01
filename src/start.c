@@ -47,6 +47,7 @@ int engine_window_poll_events(int const window_layer)
 int start(int const ac, char * const *av, char * const *env)
 {
     loaded_map_t *loaded_map = NULL;
+//    position_t position = {TILEMAP_MAX_X / 2, TILEMAP_MAX_Y / 2, 0};
     position_t position = {0, 0, 0};
 
     engine_window_create(WINDOW_LAYER_DEFAULT_WINDOW);
@@ -68,7 +69,7 @@ int start(int const ac, char * const *av, char * const *env)
             my_putdouble(fps, 2);
             my_putstr("\n");
         }
-        float speed = (float)(5) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
+        float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
         if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
             position.x -= speed;
             position.y += speed;
@@ -85,6 +86,7 @@ int start(int const ac, char * const *av, char * const *env)
             position.x += speed;
             position.y += speed;
         }
+        printf("Position: %.2f, %.2f\n", (float)position.x, (float)position.y);
         sfRenderWindow_clear(ENGINE.default_window->render_window, sfBlack);
         engine_loaded_map_display(loaded_map, WINDOW_LAYER_DEFAULT_WINDOW, position, VIEW_ANGLE_0);
         sfRenderWindow_display(ENGINE.default_window->render_window);

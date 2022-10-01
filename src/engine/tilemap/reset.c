@@ -10,12 +10,18 @@
 
 static short set_tile(unsigned int const x, unsigned int const y, unsigned int const z)
 {
+    if (z == 0 && x == 0 && y == 0)
+        return 30;
+    if (z <= 2 && x == y && x == TILEMAP_MAX_Y - y - 1)
+        return 36;
+    else {
+        if (z == 0 && x == y)
+            return 88;
+        if (z == 0 && x == TILEMAP_MAX_Y - y - 1)
+            return 98;
+    }
     if (z == 0)
         return 0;
-    if (z == 1 && (x == 0 || (x % 2 == 1 && y == 0)))
-        return 1;
-    if (z == 2 && (x == 0 || (x % 2 == 1 && y == 0)))
-        return 4;
     return TILE_DEFAULT;
 }
 

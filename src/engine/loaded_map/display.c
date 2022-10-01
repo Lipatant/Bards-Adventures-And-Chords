@@ -16,12 +16,13 @@
 static bool is_out_of_screen(sprite_t *sprite, window_layers_t *window)
 {
     sfFloatRect sprite_rect = sfSprite_getGlobalBounds(sprite->sprite);
-    sfFloatRect viewport = sfView_getViewport(window->view);
+    sfFloatRect viewport = {
+        window->view_size.x * -0.5,
+        window->view_size.y * -0.5,
+        window->view_size.x, window->view_size.y};
 
-    viewport.width *= window->view_size.x;
-    viewport.height *= window->view_size.y;
-//    return sfFloatRect_intersects(&sprite_rect, &viewport, NULL);
-    return sfFloatRect_contains(&viewport, sprite_rect.left + sprite_rect.width / 2, sprite_rect.top + sprite_rect.height / 2);
+    return sfFloatRect_intersects(&sprite_rect, &viewport, NULL);
+//    return sfFloatRect_contains(&viewport, sprite_rect.left + sprite_rect.width / 2, sprite_rect.top + sprite_rect.height / 2);
 }
 
 static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f position, short const tile)
@@ -33,6 +34,8 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
 
     if (tile == TILE_DEFAULT)
         return;
+    position.x -= TILE_FLAT_X / 2;
+    position.y -= TILE_FLAT_Y / 2;
     sfSprite_setPosition(sprite->sprite, position);
     sfSprite_setTextureRect(sprite->sprite, texture_rect);
     if (!is_out_of_screen(sprite, window))
@@ -49,7 +52,8 @@ static sfVector2f get_on_screen_position(position_t position)
     return actual_position;
 }
 
-static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_t center, short const view_angle) {
+static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_t center, short const view_angle)
+{
     sprite_t *sprite = loaded_map->sprite;
     tilemap_t *tilemap = &loaded_map->map->tilemap;
     sfVector2f actual_position = get_on_screen_position(center);
@@ -61,8 +65,8 @@ static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window
     sfSprite_setScale(sprite->sprite, scale);
     for (int x = 0; x < TILEMAP_MAX_X; x++) {
         for (int y = 0; y < TILEMAP_MAX_Y; y++) {
-            position.x = window->view_size.x / 2 + actual_position.x * scale.x + TILE_FLAT_X * 0.5 * (x - y) * scale.x;
-            position.y = window->view_size.y / 2 + actual_position.y * scale.y + TILE_FLAT_Y * 0.5 * (x + y) * scale.y + center.z * TILE_HEIGHT * scale.y;
+            position.x = actual_position.x * scale.x + TILE_FLAT_X * 0.5 * (x - y) * scale.x;
+            position.y = actual_position.y * scale.y + TILE_FLAT_Y * 0.5 * (x + y) * scale.y + center.z * TILE_HEIGHT * scale.y;
             for (int z = 0; z < TILEMAP_MAX_Z; z++) {
                 display_tile(sprite, window, position, tilemap->tile[x][y][z]);
                 position.y -= TILE_HEIGHT * scale.y;
