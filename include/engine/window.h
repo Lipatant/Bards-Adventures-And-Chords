@@ -30,6 +30,7 @@ typedef struct window_layers_s {
     sfRenderWindow *render_window;
     sfVector2u render_window_size;
     sfView *view;
+    sfVector2f view_center;
     sfFloatRect view_rect;
     sfVector2f view_size;
     bool has_focus;
@@ -51,3 +52,9 @@ bool engine_window_layer_is_valid(int const window_layer);
 // Returns the updated view
 // Otherwise, returns false
 sfView *engine_window_update_view(int const window_layer);
+// Returns the updated view
+// Otherwise, returns false
+sfView *engine_window_view_set_center(int const window_layer, float const x, float const y);
+// Returns the updated view
+// Otherwise, returns false
+sfView *engine_window_view_set_center_vector(int const window_layer, sfVector2f center);

@@ -9,6 +9,7 @@ SRC	=	../main.c															\
 	engine/loaded_map/create.c												\
 	engine/loaded_map/display.c												\
 	engine/loaded_map/free.c												\
+	engine/loaded_map/view_angle/rotate.c									\
 	engine/map/create.c														\
 	engine/map/free.c														\
 	engine/sprite/create/from_file.c										\
@@ -19,6 +20,8 @@ SRC	=	../main.c															\
 	engine/window/destroy/all.c												\
 	engine/window/layer/is_valid.c											\
 	engine/window/update/view.c												\
+	engine/window/view/set_center.c											\
+	engine/window/view/set_center/vector.c									\
 	start.c																	\
 
 BUILDDIR = build

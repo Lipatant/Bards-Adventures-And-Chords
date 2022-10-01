@@ -47,8 +47,8 @@ int engine_window_poll_events(int const window_layer)
 int start(int const ac, char * const *av, char * const *env)
 {
     loaded_map_t *loaded_map = NULL;
-//    position_t position = {TILEMAP_MAX_X / 2, TILEMAP_MAX_Y / 2, 0};
-    position_t position = {0, 0, 0};
+    position_t position = {TILEMAP_MAX_X / 2, TILEMAP_MAX_Y / 2, 0};
+    bool change_angle = false;
 
     engine_window_create(WINDOW_LAYER_DEFAULT_WINDOW);
     ENGINE.default_window = &ENGINE.windows[WINDOW_LAYER_DEFAULT_WINDOW];
@@ -71,24 +71,47 @@ int start(int const ac, char * const *av, char * const *env)
         }
         float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
         if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            position.x -= speed;
-            position.y += speed;
+            position.x -= speed * loaded_map->view_angle.coef_x;
+            position.y += speed * loaded_map->view_angle.coef_y;
+            position.z = 0;
         }
         if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            position.x += speed;
-            position.y -= speed;
+            position.x += speed * loaded_map->view_angle.coef_x;
+            position.y -= speed * loaded_map->view_angle.coef_y;
+            position.z = 0;
         }
         if (sfKeyboard_isKeyPressed(sfKeyUp)) {
-            position.x -= speed;
-            position.y -= speed;
+            position.x -= speed * loaded_map->view_angle.coef_x;
+            position.y -= speed * loaded_map->view_angle.coef_y;
+            position.z = 0;
         }
         if (sfKeyboard_isKeyPressed(sfKeyDown)) {
-            position.x += speed;
-            position.y += speed;
+            position.x += speed * loaded_map->view_angle.coef_x;
+            position.y += speed * loaded_map->view_angle.coef_y;
+            position.z = 0;
         }
-        printf("Position: %.2f, %.2f\n", (float)position.x, (float)position.y);
+        if (sfKeyboard_isKeyPressed(sfKeyA))
+            position.z -= speed * 0.5;
+        if (sfKeyboard_isKeyPressed(sfKeyE))
+            position.z += speed * 0.5;
+        if (sfKeyboard_isKeyPressed(sfKeyC)) {
+            if (change_angle == false)
+                engine_loaded_map_view_angle_rotate(loaded_map, false);
+            change_angle = true;
+        } else
+            change_angle = false;
+        if (position.x >= 0 && position.x < TILEMAP_MAX_X && position.y >= 0 && position.y < TILEMAP_MAX_Y && position.z >= 0 && position.z < TILEMAP_MAX_Z) {
+            if (sfKeyboard_isKeyPressed(sfKeyNum1))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 0;
+            if (sfKeyboard_isKeyPressed(sfKeyNum2))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 20;
+            if (sfKeyboard_isKeyPressed(sfKeyNum3))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 50;
+            if (sfKeyboard_isKeyPressed(sfKeyNum0))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = TILE_DEFAULT;
+        }
         sfRenderWindow_clear(ENGINE.default_window->render_window, sfBlack);
-        engine_loaded_map_display(loaded_map, WINDOW_LAYER_DEFAULT_WINDOW, position, VIEW_ANGLE_0);
+        engine_loaded_map_display(loaded_map, WINDOW_LAYER_DEFAULT_WINDOW, position);
         sfRenderWindow_display(ENGINE.default_window->render_window);
     }
     if (ENGINE.delta_clock != NULL)

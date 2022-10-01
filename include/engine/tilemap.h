@@ -17,7 +17,7 @@
     #include <SFML/System/Vector2.h>
 
 typedef struct __attribute__((packed))tilemap_s {
-    short tile[TILEMAP_MAX_X][TILEMAP_MAX_Y][TILEMAP_MAX_Z];
+    unsigned short tile[TILEMAP_MAX_X][TILEMAP_MAX_Y][TILEMAP_MAX_Z];
 } tilemap_t;
 
 static const sfVector2u TILE_TEXTURES_OFFSET = {2, 0};

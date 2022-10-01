@@ -17,8 +17,8 @@ static bool is_out_of_screen(sprite_t *sprite, window_layers_t *window)
 {
     sfFloatRect sprite_rect = sfSprite_getGlobalBounds(sprite->sprite);
     sfFloatRect viewport = {
-        window->view_size.x * -0.5,
-        window->view_size.y * -0.5,
+        window->view_center.x + window->view_size.x * -0.5,
+        window->view_center.y + window->view_size.y * -0.5,
         window->view_size.x, window->view_size.y};
 
     return sfFloatRect_intersects(&sprite_rect, &viewport, NULL);
@@ -34,8 +34,8 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
 
     if (tile == TILE_DEFAULT)
         return;
-    position.x -= TILE_FLAT_X / 2;
-    position.y -= TILE_FLAT_Y / 2;
+    position.x -= TILE_FLAT_X / 2 + TILE_TEXTURES_OFFSET_BEFORE.x;
+    position.y -= TILE_TEXTURES_OFFSET_BEFORE.y;
     sfSprite_setPosition(sprite->sprite, position);
     sfSprite_setTextureRect(sprite->sprite, texture_rect);
     if (!is_out_of_screen(sprite, window))
@@ -43,39 +43,41 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
     sfRenderWindow_drawSprite(window->render_window, sprite->sprite, NULL);
 }
 
-static sfVector2f get_on_screen_position(position_t position)
-{
-    sfVector2f actual_position = {0, 0};
-
-    actual_position.x = TILE_FLAT_X * -0.5 * (position.x - position.y);
-    actual_position.y = TILE_FLAT_Y * -0.5 * (position.x + position.y);
-    return actual_position;
-}
-
-static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_t center, short const view_angle)
+static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_t center)
 {
     sprite_t *sprite = loaded_map->sprite;
     tilemap_t *tilemap = &loaded_map->map->tilemap;
-    sfVector2f actual_position = get_on_screen_position(center);
-    sfVector2f scale = {1, 1};
     sfVector2f position = {0, 0};
     sfVector2f stored_position = {0, 0};
     sfIntRect texture_rect = {0, 0, TILE_TEXTURES_SIZE.x, TILE_TEXTURES_SIZE.y};
 
-    sfSprite_setScale(sprite->sprite, scale);
-    for (int x = 0; x < TILEMAP_MAX_X; x++) {
-        for (int y = 0; y < TILEMAP_MAX_Y; y++) {
-            position.x = actual_position.x * scale.x + TILE_FLAT_X * 0.5 * (x - y) * scale.x;
-            position.y = actual_position.y * scale.y + TILE_FLAT_Y * 0.5 * (x + y) * scale.y + center.z * TILE_HEIGHT * scale.y;
-            for (int z = 0; z < TILEMAP_MAX_Z; z++) {
+    for (int x = loaded_map->view_angle.x.start; x != loaded_map->view_angle.x.end; x += loaded_map->view_angle.x.end_of_loop) {
+        for (int y = loaded_map->view_angle.y.start; y != loaded_map->view_angle.y.end; y += loaded_map->view_angle.y.end_of_loop) {
+            position.x = TILE_FLAT_X * 0.5 * (x * loaded_map->view_angle.coef_x - y * loaded_map->view_angle.coef_y);
+            position.y = TILE_FLAT_Y * 0.5 * (x * loaded_map->view_angle.coef_x + y * loaded_map->view_angle.coef_y) + center.z * TILE_HEIGHT;
+            for (int z = 0; z != TILEMAP_MAX_Z; z++) {
                 display_tile(sprite, window, position, tilemap->tile[x][y][z]);
-                position.y -= TILE_HEIGHT * scale.y;
+                position.y -= TILE_HEIGHT;
             }
         }
     }
 }
 
-void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer, position_t center, short const view_angle)
+static sfVector2f get_position_on_screen(loaded_map_t *loaded_map, position_t position)
+{
+    sfVector2f actual_position = {0, 0};
+
+    actual_position.x = TILE_FLAT_X * 0.5 *
+        (position.x * loaded_map->view_angle.coef_x - position.y * loaded_map->view_angle.coef_y);
+    actual_position.y = TILE_FLAT_Y * 0.5 *
+        (position.x * loaded_map->view_angle.coef_x + position.y * loaded_map->view_angle.coef_y);
+    actual_position.y -= TILE_HEIGHT * (position.z + 1);
+    printf("Position: x:%.2f, y:%.2f, z:%.2f\n", position.x, position.y, position.z);
+    printf("Actual: %.2f, %.2f\n", actual_position.x, actual_position.y);
+    return actual_position;
+}
+
+void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer, position_t center)
 {
     if (loaded_map == NULL || !engine_window_layer_is_valid(window_layer))
         return;
@@ -85,6 +87,7 @@ void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer,
         return;
     if (&ENGINE.windows[window_layer].render_window == NULL)
         return;
+    engine_window_view_set_center_vector(window_layer, get_position_on_screen(loaded_map, center));
     engine_window_update_view(window_layer);
-    display_loaded_map(loaded_map, &ENGINE.windows[window_layer], center, view_angle);
+    display_loaded_map(loaded_map, &ENGINE.windows[window_layer], center);
 }

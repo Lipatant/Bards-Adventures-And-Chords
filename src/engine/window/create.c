@@ -22,6 +22,8 @@ static void store_in_window_layer(int const window_layer, sfRenderWindow *window
     ENGINE.windows[window_layer].has_focus = DEFAULT_WINDOW_FOCUS;
     ENGINE.windows[window_layer].had_focus = DEFAULT_WINDOW_FOCUS;
     ENGINE.windows[window_layer].view = NULL;
+    ENGINE.windows[window_layer].view_center.x = 0;
+    ENGINE.windows[window_layer].view_center.y = 0;
     ENGINE.windows[window_layer].view_rect.left = 0;
     ENGINE.windows[window_layer].view_rect.top = 0;
     ENGINE.windows[window_layer].view_rect.width = 0;
