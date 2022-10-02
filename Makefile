@@ -12,6 +12,12 @@ SRC	=	../main.c															\
 	engine/loaded_map/view_angle/rotate.c									\
 	engine/map/create.c														\
 	engine/map/free.c														\
+	engine/scene/call.c														\
+	engine/scene/create.c													\
+	engine/scene/level_editor/create.c										\
+	engine/scene/level_editor/free.c										\
+	engine/scene/level_editor/tick.c										\
+	engine/scene/free.c														\
 	engine/sprite/create/from_file.c										\
 	engine/sprite/destroy.c													\
 	engine/tilemap/reset.c													\

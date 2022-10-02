@@ -107,6 +107,10 @@ int start(int const ac, char * const *av, char * const *env)
                 loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 20;
             if (sfKeyboard_isKeyPressed(sfKeyNum3))
                 loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 50;
+            if (sfKeyboard_isKeyPressed(sfKeyNum4))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 23;
+            if (sfKeyboard_isKeyPressed(sfKeyNum5))
+                loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = 24;
             if (sfKeyboard_isKeyPressed(sfKeyNum0))
                 loaded_map->map->tilemap.tile[(unsigned int)position.x][(unsigned int)position.y][(unsigned int)position.z] = TILE_DEFAULT;
         }

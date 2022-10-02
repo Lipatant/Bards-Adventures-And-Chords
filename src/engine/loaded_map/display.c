@@ -72,8 +72,6 @@ static sfVector2f get_position_on_screen(loaded_map_t *loaded_map, position_t po
     actual_position.y = TILE_FLAT_Y * 0.5 *
         (position.x * loaded_map->view_angle.coef_x + position.y * loaded_map->view_angle.coef_y);
     actual_position.y -= TILE_HEIGHT * (position.z + 1);
-    printf("Position: x:%.2f, y:%.2f, z:%.2f\n", position.x, position.y, position.z);
-    printf("Actual: %.2f, %.2f\n", actual_position.x, actual_position.y);
     return actual_position;
 }
 
