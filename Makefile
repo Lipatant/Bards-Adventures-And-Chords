@@ -8,6 +8,7 @@
 SRC	=	../main.c															\
 	engine/loaded_map/create.c												\
 	engine/loaded_map/display.c												\
+	engine/loaded_map/display/level_editor.c								\
 	engine/loaded_map/free.c												\
 	engine/loaded_map/view_angle/rotate.c									\
 	engine/map/create.c														\

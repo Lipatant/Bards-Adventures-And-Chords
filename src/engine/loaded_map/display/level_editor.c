@@ -2,7 +2,7 @@
 ** BARDS - VIRGILE (LIPATANT) BERRIER, 2022
 ** engine/loaded_map/display.c
 ** File description:
-** Displays a loaded map on the selected window
+** Modified version of engine_loaded_map_display
 */
 
 #include "engine.h"
@@ -22,7 +22,6 @@ static bool is_out_of_screen(sprite_t *sprite, window_layers_t *window)
         window->view_size.x, window->view_size.y};
 
     return sfFloatRect_intersects(&sprite_rect, &viewport, NULL);
-//    return sfFloatRect_contains(&viewport, sprite_rect.left + sprite_rect.width / 2, sprite_rect.top + sprite_rect.height / 2);
 }
 
 static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f position, short const tile)
@@ -43,7 +42,7 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
     sfRenderWindow_drawSprite(window->render_window, sprite->sprite, NULL);
 }
 
-static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window)
+static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_tile_t selector)
 {
     sprite_t *sprite = loaded_map->sprite;
     tilemap_t *tilemap = &loaded_map->map->tilemap;
@@ -57,14 +56,21 @@ static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window
             position.y = TILE_FLAT_Y * 0.5 * (x * loaded_map->view_angle.coef_x + y * loaded_map->view_angle.coef_y);
             for (int z = 0; z != TILEMAP_MAX_Z; z++) {
                 display_tile(sprite, window, position, tilemap->tile[x][y][z]);
+                if (x == selector.x && y == selector.y && z == selector.z)
+                    display_tile(sprite, window, position, TILE_EDITOR);
                 position.y -= TILE_HEIGHT;
             }
         }
     }
 }
 
-static sfVector2f get_position_on_screen(loaded_map_t *loaded_map, position_t position)
+static sfVector2f get_position_on_screen(loaded_map_t *loaded_map, position_tile_t selector)
 {
+    position_t position = {
+        selector.x + 0.5,
+        selector.y + 0.5,
+        selector.z + 0.5,
+    };
     sfVector2f actual_position = {0, 0};
 
     actual_position.x = TILE_FLAT_X * 0.5 *
@@ -75,8 +81,15 @@ static sfVector2f get_position_on_screen(loaded_map_t *loaded_map, position_t po
     return actual_position;
 }
 
-void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer, position_t center)
+void engine_loaded_map_display_level_editor(scene_t *scene)
 {
+    loaded_map_t *loaded_map = NULL;
+    int window_layer = 0;
+
+    if (scene == NULL || scene->type != SCENE_TYPE_LEVEL_EDITOR)
+        return;
+    loaded_map = scene->data.level_editor.loaded_map;
+    window_layer = scene->data.level_editor.window_layer;
     if (loaded_map == NULL || !engine_window_layer_is_valid(window_layer))
         return;
     if (loaded_map->map == NULL || loaded_map->sprite == NULL)
@@ -85,7 +98,7 @@ void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer,
         return;
     if (&ENGINE.windows[window_layer].render_window == NULL)
         return;
-    engine_window_view_set_center_vector(window_layer, get_position_on_screen(loaded_map, center));
+    engine_window_view_set_center_vector(window_layer, get_position_on_screen(loaded_map, scene->data.level_editor.selector));
     engine_window_update_view(window_layer);
-    display_loaded_map(loaded_map, &ENGINE.windows[window_layer]);
+    display_loaded_map(loaded_map, &ENGINE.windows[window_layer], scene->data.level_editor.selector);
 }

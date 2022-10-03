@@ -12,6 +12,6 @@ void engine_scene_free(scene_t *scene)
 {
     if (scene == NULL)
         return;
-    engine_scene_call(scene, SCENE_FUNCTION_FREE);
+    engine_scene_call(scene, SCENE_CALL_FREE);
     free(scene);
 }

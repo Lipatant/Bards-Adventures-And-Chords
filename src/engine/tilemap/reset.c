@@ -11,15 +11,15 @@
 static short set_tile(unsigned int const x, unsigned int const y, unsigned int const z)
 {
     if (z == 0 && x == 0 && y == 0)
-        return 30;
+        return 40;
     if (z <= 2 && x == y && x == TILEMAP_MAX_Y - y - 1)
-        return 36;
+        return 46;
     if (z == 0 && x == y)
-        return 88;
-    if (z <= 0 + (x % 10) && x == TILEMAP_MAX_Y - y - 1)
         return 98;
+    if (z <= 0 + (x % 10) && x == TILEMAP_MAX_Y - y - 1)
+        return 108;
     if (z == 0)
-        return 0;
+        return 10;
     return TILE_DEFAULT;
 }
 

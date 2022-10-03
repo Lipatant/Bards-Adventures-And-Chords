@@ -7,11 +7,15 @@
 
 #pragma once
     #include "engine/loaded_map.h"
+    #include "engine/types.h"
+
+typedef struct loaded_map_s loaded_map_t;
+typedef struct position_tile_s position_tile_t;
 
 typedef struct scene_level_editor_s {
-    unsigned short type;
     loaded_map_t *loaded_map;
-    int const window_layer;
+    position_tile_t selector;
+    int window_layer;
 } scene_level_editor_t;
 
 typedef enum {
@@ -19,13 +23,13 @@ typedef enum {
     SCENE_TYPE_TOTAL,
 } scene_type_t;
 
-typedef unsigned short scene_function_id_t;
+typedef unsigned char scene_call_id_t;
 
-enum scene_functions_indices {
-    SCENE_FUNCTION_CREATE,
-    SCENE_FUNCTION_FREE,
-    SCENE_FUNCTION_TICK,
-    SCENE_FUNCTION_TOTAL,
+enum scene_calls_indices {
+    SCENE_CALL_CREATE,
+    SCENE_CALL_FREE,
+    SCENE_CALL_TICK,
+    SCENE_CALL_TOTAL,
 };
 
 typedef struct scene_s {

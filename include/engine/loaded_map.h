@@ -8,6 +8,7 @@
 #pragma once
     #include "engine/sprite/types.h"
     #include "engine/map.h"
+    #include "engine/scene/types.h"
     #include "engine/types.h"
 
     #include "stdbool.h"
@@ -39,7 +40,7 @@ typedef struct loaded_map_s {
     map_t *map;
     sprite_t *sprite;
     struct view_angle_params_s view_angle;
-    short view_angle_id;
+    char view_angle_id;
 } loaded_map_t;
 
 static const struct view_angle_params_s VIEW_ANGLE_PARAMS[VIEW_ANGLE_TOTAL] = {
@@ -61,10 +62,17 @@ static const struct view_angle_params_s VIEW_ANGLE_PARAMS[VIEW_ANGLE_TOTAL] = {
     }
 };
 
+typedef struct scene_s scene_t;
+
 // Returns the generated loaded_map
 // Returns NULL if a problem is encountered
 loaded_map_t *engine_loaded_map_create(void);
+/// \param loaded_map Loaded map to select
+/// \param window_layer Layer on which to display
+/// \param center Position of the center of the screen
 void engine_loaded_map_display(loaded_map_t *loaded_map, int const window_layer, position_t center);
+/// \param scene Scene to select
+void engine_loaded_map_display_level_editor(scene_t *scene);
 void engine_loaded_map_free(loaded_map_t *loaded_map);
 // Returns the id of the new view_angle
 // Returns -1 if a problem is encountered

@@ -11,6 +11,6 @@
 /// \param scene Pointer to the selected scene
 void engine_scene_level_editor_create(scene_t *scene);
 /// \param scene Pointer to the selected scene
-void engine_scene_level_editor_tick(scene_t *scene);
-/// \param scene Pointer to the selected scene
 void engine_scene_level_editor_free(scene_t *scene);
+/// \param scene Pointer to the selected scene
+void engine_scene_level_editor_tick(scene_t *scene);

@@ -18,6 +18,6 @@ scene_t *engine_scene_create(scene_type_t const scene_type)
     if (scene == NULL)
         return NULL;
     scene->type = scene_type;
-    engine_scene_call(scene, SCENE_FUNCTION_CREATE);
+    engine_scene_call(scene, SCENE_CALL_CREATE);
     return scene;
 }

@@ -6,7 +6,6 @@
 */
 
 #pragma once
-    #include "engine/sprite/types.h"
 
 typedef struct position_s {
     double x;
@@ -19,3 +18,6 @@ typedef struct position_tile_s {
     int y;
     int z;
 } position_tile_t;
+
+    #include "engine/sprite/types.h"
+    #include "engine/scene/types.h"
