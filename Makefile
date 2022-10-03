@@ -6,6 +6,7 @@
 ##
 
 SRC	=	../main.c															\
+	engine/input/initialize.c												\
 	engine/loaded_map/create.c												\
 	engine/loaded_map/display.c												\
 	engine/loaded_map/display/level_editor.c								\
