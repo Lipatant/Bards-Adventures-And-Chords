@@ -8,6 +8,7 @@
 #pragma once
     #define TILE_DEFAULT 0
     #define TILE_EDITOR 1
+    #define TILE_EDITOR_FILL 2
     #define TILE_HEIGHT 10
     #define TILE_FLAT_X 16
     #define TILE_FLAT_Y 8

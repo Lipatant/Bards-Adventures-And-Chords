@@ -33,8 +33,8 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
 
     if (tile == TILE_DEFAULT)
         return;
-    position.x -= TILE_FLAT_X / 2 + TILE_TEXTURES_OFFSET_BEFORE.x;
-    position.y -= TILE_TEXTURES_OFFSET_BEFORE.y;
+    position.x -= (int)(TILE_FLAT_X / 2 + TILE_TEXTURES_OFFSET_BEFORE.x);
+    position.y -= (int)(TILE_TEXTURES_OFFSET_BEFORE.y);
     sfSprite_setPosition(sprite->sprite, position);
     sfSprite_setTextureRect(sprite->sprite, texture_rect);
     if (!is_out_of_screen(sprite, window))
@@ -42,7 +42,7 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
     sfRenderWindow_drawSprite(window->render_window, sprite->sprite, NULL);
 }
 
-static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, position_tile_t selector)
+static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, scene_level_editor_t level_editor)
 {
     sprite_t *sprite = loaded_map->sprite;
     tilemap_t *tilemap = &loaded_map->map->tilemap;
@@ -56,7 +56,9 @@ static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window
             position.y = TILE_FLAT_Y * 0.5 * (x * loaded_map->view_angle.coef_x + y * loaded_map->view_angle.coef_y);
             for (int z = 0; z != TILEMAP_MAX_Z; z++) {
                 display_tile(sprite, window, position, tilemap->tile[x][y][z]);
-                if (x == selector.x && y == selector.y && z == selector.z)
+                if (x == level_editor.marker.x && y == level_editor.marker.y && z == level_editor.marker.z)
+                    display_tile(sprite, window, position, TILE_EDITOR_FILL);
+                if (x == level_editor.selector.x && y == level_editor.selector.y && z == level_editor.selector.z)
                     display_tile(sprite, window, position, TILE_EDITOR);
                 position.y -= TILE_HEIGHT;
             }
@@ -100,5 +102,5 @@ void engine_loaded_map_display_level_editor(scene_t *scene)
         return;
     engine_window_view_set_center_vector(window_layer, get_position_on_screen(loaded_map, scene->data.level_editor.selector));
     engine_window_update_view(window_layer);
-    display_loaded_map(loaded_map, &ENGINE.windows[window_layer], scene->data.level_editor.selector);
+    display_loaded_map(loaded_map, &ENGINE.windows[window_layer], scene->data.level_editor);
 }

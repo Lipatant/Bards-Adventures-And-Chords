@@ -15,6 +15,7 @@ typedef struct position_tile_s position_tile_t;
 typedef struct scene_level_editor_s {
     loaded_map_t *loaded_map;
     position_tile_t selector;
+    position_tile_t marker;
     int window_layer;
 } scene_level_editor_t;
 

@@ -7,6 +7,9 @@
 
 SRC	=	../main.c															\
 	engine/input/initialize.c												\
+	engine/input/is_held.c													\
+	engine/input/is_pressed.c												\
+	engine/input/update.c													\
 	engine/loaded_map/create.c												\
 	engine/loaded_map/display.c												\
 	engine/loaded_map/display/level_editor.c								\
@@ -19,6 +22,8 @@ SRC	=	../main.c															\
 	engine/scene/level_editor/create.c										\
 	engine/scene/level_editor/free.c										\
 	engine/scene/level_editor/tick.c										\
+	engine/scene/level_editor/tools/fill/rectangle.c						\
+	engine/scene/level_editor/tools/fill/replace.c							\
 	engine/scene/free.c														\
 	engine/sprite/create/from_file.c										\
 	engine/sprite/destroy.c													\

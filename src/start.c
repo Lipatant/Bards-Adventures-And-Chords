@@ -52,6 +52,7 @@ int start(int const ac, char * const *av, char * const *env)
     ENGINE.default_window = &ENGINE.windows[WINDOW_LAYER_DEFAULT_WINDOW];
     if (ENGINE.windows[WINDOW_LAYER_MAIN_GAME].render_window == NULL)
         return RETURNED_EXIT;
+    engine_input_initialize();
     ENGINE.delta = 0;
     ENGINE.delta_clock = sfClock_create();
     ENGINE.seconds_clock = sfClock_create();
@@ -67,6 +68,7 @@ int start(int const ac, char * const *av, char * const *env)
             my_putdouble(fps, 2);
             my_putstr("\n");
         }
+        engine_input_update();
         float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);
         sfRenderWindow_clear(ENGINE.default_window->render_window, sfBlack);
         engine_scene_call(scene_level_editor, SCENE_CALL_TICK);

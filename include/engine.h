@@ -8,6 +8,7 @@
 #pragma once
     #define SECONDS_TO_MILLISECONDS 1000000
 
+    #include "engine/input.h"
     #include "engine/loaded_map.h"
     #include "engine/map.h"
     #include "engine/scene.h"

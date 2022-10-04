@@ -20,4 +20,7 @@ void engine_scene_level_editor_create(scene_t *scene)
     scene->data.level_editor.selector.x = 0;
     scene->data.level_editor.selector.y = 0;
     scene->data.level_editor.selector.z = 0;
+    scene->data.level_editor.marker.x = 0;
+    scene->data.level_editor.marker.y = 0;
+    scene->data.level_editor.marker.z = 0;
 }
