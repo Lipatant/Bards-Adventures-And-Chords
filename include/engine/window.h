@@ -38,7 +38,8 @@ typedef struct window_layers_s {
 } window_layers_t;
 
 static const char DEFAULT_WINDOW_NAME[] = "Bards";
-static const sfVector2u DEFAULT_WINDOW_RESOLUTION = {256, 224};
+// Orinal: 256x224
+static const sfVector2u DEFAULT_WINDOW_RESOLUTION = {400, 224};
 
 // Returns the generated RenderWindow
 // Returns NULL if a problem is encountered

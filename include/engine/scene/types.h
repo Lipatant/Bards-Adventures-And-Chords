@@ -7,6 +7,7 @@
 
 #pragma once
     #include "engine/loaded_map.h"
+    #include "engine/tilemap/types.h"
     #include "engine/types.h"
 
 typedef struct loaded_map_s loaded_map_t;
@@ -16,6 +17,7 @@ typedef struct scene_level_editor_s {
     loaded_map_t *loaded_map;
     position_tile_t selector;
     position_tile_t marker;
+    tile_propreties_t tile_proprety;
     int window_layer;
 } scene_level_editor_t;
 

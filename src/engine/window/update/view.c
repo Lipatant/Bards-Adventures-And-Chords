@@ -13,12 +13,15 @@
 static sfVector2f get_window_ratio(window_layers_t *window)
 {
     sfVector2f ratio = {1, 1};
+    double window_ratio[2] = {0, 0};
 
     window->render_window_size = sfRenderWindow_getSize(window->render_window);
-    if (window->render_window_size.x > window->render_window_size.y)
-        ratio.x = (float)window->render_window_size.y / window->render_window_size.x;
+    window_ratio[0] = (double)window->render_window_size.x / (double)DEFAULT_WINDOW_RESOLUTION.x;
+    window_ratio[1] = (double)window->render_window_size.y / (double)DEFAULT_WINDOW_RESOLUTION.y;
+    if (window_ratio[0] > window_ratio[1])
+        ratio.x = window_ratio[1] / window_ratio[0];
     else
-        ratio.y = (float)window->render_window_size.x / window->render_window_size.y;
+        ratio.y = window_ratio[0] / window_ratio[1];
     return ratio;
 }
 

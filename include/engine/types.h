@@ -21,3 +21,4 @@ typedef struct position_tile_s {
 
     #include "engine/sprite/types.h"
     #include "engine/scene/types.h"
+    #include "engine/tilemap/types.h"

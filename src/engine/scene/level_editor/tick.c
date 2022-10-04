@@ -24,9 +24,9 @@ static void placement_inputs(scene_t *scene)
 
     if (scene->data.level_editor.loaded_map == NULL || scene->data.level_editor.loaded_map->map == NULL)
         return;
-    if (engine_input_is_pressed(INPUT_EDITOR_PLACE))
+    if (engine_input_is_held(INPUT_EDITOR_PLACE))
         scene->data.level_editor.loaded_map->map->tilemap.tile[selector.x][selector.y][selector.z] = 20;
-    if (engine_input_is_pressed(INPUT_EDITOR_ERASE))
+    if (engine_input_is_held(INPUT_EDITOR_ERASE))
         scene->data.level_editor.loaded_map->map->tilemap.tile[selector.x][selector.y][selector.z] = TILE_DEFAULT;
     if (engine_input_is_pressed(INPUT_EDITOR_FILL_RECTANGLE))
         engine_scene_level_editor_tools_fill_rectangle(scene, 18);

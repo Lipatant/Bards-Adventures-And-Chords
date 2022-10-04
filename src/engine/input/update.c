@@ -21,6 +21,8 @@ static bool is_pressed(input_id_t const id)
     }
     if (!sfJoystick_isConnected(ENGINE.input_state.joystick))
         return false;
+    if (ENGINE.input_state.controls.inputs[id].joystick.button == JOYSTICK_BUTTON_UNKNOWN)
+        return false;
     if (sfJoystick_isButtonPressed(ENGINE.input_state.joystick, ENGINE.input_state.controls.inputs[id].joystick.button))
         return true;
     return false;
