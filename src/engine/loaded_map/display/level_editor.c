@@ -24,12 +24,13 @@ static bool is_out_of_screen(sprite_t *sprite, window_layers_t *window)
     return sfFloatRect_intersects(&sprite_rect, &viewport, NULL);
 }
 
-static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f position, short const tile)
+static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f position, short const tile, bool const transparent)
 {
     sfIntRect texture_rect = {
         (tile % (sprite->texture_size.x / TILE_TEXTURES_SIZE.x)) * TILE_TEXTURES_SIZE.x,
         (tile / (sprite->texture_size.x / TILE_TEXTURES_SIZE.x)) * TILE_TEXTURES_SIZE.y,
         TILE_TEXTURES_SIZE.x, TILE_TEXTURES_SIZE.y};
+    sfColor color = {255, 255, 255, 150};
 
     if (tile == TILE_DEFAULT)
         return;
@@ -39,7 +40,11 @@ static void display_tile(sprite_t *sprite, window_layers_t *window, sfVector2f p
     sfSprite_setTextureRect(sprite->sprite, texture_rect);
     if (!is_out_of_screen(sprite, window))
         return;
+    if (transparent)
+        sfSprite_setColor(sprite->sprite, color);
     sfRenderWindow_drawSprite(window->render_window, sprite->sprite, NULL);
+    if (transparent)
+        sfSprite_setColor(sprite->sprite, sfWhite);
 }
 
 static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window, scene_level_editor_t level_editor)
@@ -55,11 +60,14 @@ static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window
             position.x = TILE_FLAT_X * 0.5 * (x * loaded_map->view_angle.coef_x - y * loaded_map->view_angle.coef_y);
             position.y = TILE_FLAT_Y * 0.5 * (x * loaded_map->view_angle.coef_x + y * loaded_map->view_angle.coef_y);
             for (int z = 0; z != TILEMAP_MAX_Z; z++) {
-                display_tile(sprite, window, position, tilemap->tile[x][y][z]);
+                if (z <= level_editor.selector.z || !engine_input_is_held(INPUT_EDITOR_XRAYS))
+                    display_tile(sprite, window, position, tilemap->tile[x][y][z], z + 1 > level_editor.selector.z && engine_input_is_held(INPUT_EDITOR_XRAYS));
                 if (x == level_editor.marker.x && y == level_editor.marker.y && z == level_editor.marker.z)
-                    display_tile(sprite, window, position, TILE_EDITOR_FILL);
-                if (x == level_editor.selector.x && y == level_editor.selector.y && z == level_editor.selector.z)
-                    display_tile(sprite, window, position, TILE_EDITOR);
+                    display_tile(sprite, window, position, TILE_EDITOR_FILL, false);
+                if (x == level_editor.selector.x && y == level_editor.selector.y && z == level_editor.selector.z) {
+                    display_tile(sprite, window, position, 20, true);
+                    display_tile(sprite, window, position, TILE_EDITOR, false);
+                }
                 position.y -= TILE_HEIGHT;
             }
         }
