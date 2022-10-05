@@ -11,7 +11,7 @@
 
 bool engine_input_is_pressed(input_id_t const id)
 {
-    if (id < 0 || id >= INPUT_TOTAL)
+    if (id < 0 || id >= sfJoystickButtonCount)
         return false;
     if (ENGINE.input_state.pressing[id] == 1)
         return true;

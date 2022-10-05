@@ -20,3 +20,9 @@ void engine_scene_level_editor_tools_fill_rectangle(scene_t *scene, unsigned sho
 /// \param scene Pointer to the selected scene
 /// \param tile Tile id to fill with
 void engine_scene_level_editor_tools_fill_replace(scene_t *scene, unsigned short const tile);
+// Returns the new scene position.
+/// \param scene Pointer to the selected scene
+tile_t engine_scene_level_editor_tools_next_block(scene_t *scene);
+// Returns the new scene position.
+/// \param scene Pointer to the selected scene
+tile_t engine_scene_level_editor_tools_previous_block(scene_t *scene);

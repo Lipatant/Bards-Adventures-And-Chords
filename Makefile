@@ -24,6 +24,8 @@ SRC	=	../main.c															\
 	engine/scene/level_editor/tick.c										\
 	engine/scene/level_editor/tools/fill/rectangle.c						\
 	engine/scene/level_editor/tools/fill/replace.c							\
+	engine/scene/level_editor/tools/next_block.c							\
+	engine/scene/level_editor/tools/previous_block.c							\
 	engine/scene/free.c														\
 	engine/sprite/create/from_file.c										\
 	engine/sprite/destroy.c													\

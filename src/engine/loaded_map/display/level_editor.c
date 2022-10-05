@@ -65,7 +65,7 @@ static void display_loaded_map(loaded_map_t *loaded_map, window_layers_t *window
                 if (x == level_editor.marker.x && y == level_editor.marker.y && z == level_editor.marker.z)
                     display_tile(sprite, window, position, TILE_EDITOR_FILL, false);
                 if (x == level_editor.selector.x && y == level_editor.selector.y && z == level_editor.selector.z) {
-                    display_tile(sprite, window, position, 20, true);
+                    display_tile(sprite, window, position, level_editor.tile_proprety.id, true);
                     display_tile(sprite, window, position, TILE_EDITOR, false);
                 }
                 position.y -= TILE_HEIGHT;

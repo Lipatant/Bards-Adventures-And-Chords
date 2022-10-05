@@ -10,6 +10,9 @@
     #include <SFML/Window/Keyboard.h>
     #include "stdbool.h"
 
+    #define INPUT_JOYSTICK_MIN (float)10.0
+    #define INPUT_JOYSTICK_MAX (float)40.0
+
 typedef enum {
     JOYSTICK_BUTTON_UNKNOWN = -1,
     JOYSTICK_BUTTON_B,
@@ -49,6 +52,8 @@ typedef enum {
     INPUT_EDITOR_PLACE_MARKER,
     INPUT_EDITOR_FILL_RECTANGLE,
     INPUT_EDITOR_FILL_REPLACE,
+    INPUT_EDITOR_NEXT_CUBE,
+    INPUT_EDITOR_PREVIOUS_CUBE,
     INPUT_EDITOR_XRAYS,
     INPUT_TOTAL,
 } input_id_t;
@@ -89,6 +94,7 @@ typedef struct __attribute__((packed))input_controls_s {
 // Struct used in ENGINE
 typedef struct input_state_s {
     unsigned int joystick;
+    float joystick_axis[sfJoystickAxisCount];
     unsigned int pressing[INPUT_TOTAL];
     input_controls_t controls;
 } input_state_t;

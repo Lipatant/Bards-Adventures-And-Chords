@@ -25,13 +25,13 @@ static void placement_inputs(scene_t *scene)
     if (scene->data.level_editor.loaded_map == NULL || scene->data.level_editor.loaded_map->map == NULL)
         return;
     if (engine_input_is_held(INPUT_EDITOR_PLACE))
-        scene->data.level_editor.loaded_map->map->tilemap.tile[selector.x][selector.y][selector.z] = 20;
+        scene->data.level_editor.loaded_map->map->tilemap.tile[selector.x][selector.y][selector.z] = scene->data.level_editor.tile_proprety.id;
     if (engine_input_is_held(INPUT_EDITOR_ERASE))
         scene->data.level_editor.loaded_map->map->tilemap.tile[selector.x][selector.y][selector.z] = TILE_DEFAULT;
     if (engine_input_is_pressed(INPUT_EDITOR_FILL_RECTANGLE))
-        engine_scene_level_editor_tools_fill_rectangle(scene, 18);
+        engine_scene_level_editor_tools_fill_rectangle(scene, scene->data.level_editor.tile_proprety.id);
     if (engine_input_is_pressed(INPUT_EDITOR_FILL_REPLACE))
-        engine_scene_level_editor_tools_fill_replace(scene, 70);
+        engine_scene_level_editor_tools_fill_replace(scene, scene->data.level_editor.tile_proprety.id);
 }
 
 static void manage_inputs(scene_t *scene)
@@ -55,6 +55,10 @@ static void manage_inputs(scene_t *scene)
     scene->data.level_editor.selector.z = MAX(MIN(scene->data.level_editor.selector.z + movement.z, 0), TILEMAP_MAX_Z - 1);
     if (engine_input_is_pressed(INPUT_EDITOR_PLACE_MARKER))
         place_marker(scene);
+    if (engine_input_is_pressed(INPUT_EDITOR_NEXT_CUBE))
+        engine_scene_level_editor_tools_next_block(scene);
+    if (engine_input_is_pressed(INPUT_EDITOR_PREVIOUS_CUBE))
+        engine_scene_level_editor_tools_previous_block(scene);
     placement_inputs(scene);
 }
 

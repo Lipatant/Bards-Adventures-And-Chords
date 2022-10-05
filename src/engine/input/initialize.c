@@ -11,18 +11,16 @@
 
 static void set_default_inputs(void)
 {
-    ENGINE.input_state.controls.inputs[INPUT_UP].joystick.button = JOYSTICK_BUTTON_X;
-    ENGINE.input_state.controls.inputs[INPUT_DOWN].joystick.button = JOYSTICK_BUTTON_B;
-    ENGINE.input_state.controls.inputs[INPUT_LEFT].joystick.button = JOYSTICK_BUTTON_Y;
-    ENGINE.input_state.controls.inputs[INPUT_RIGHT].joystick.button = JOYSTICK_BUTTON_A;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_UP].joystick.button = JOYSTICK_BUTTON_L;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_DOWN].joystick.button = JOYSTICK_BUTTON_ZL;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_PLACE].joystick.button = JOYSTICK_BUTTON_ZR;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_ERASE].joystick.button = JOYSTICK_BUTTON_R;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_PLACE_MARKER].joystick.button = JOYSTICK_BUTTON_START;
-    ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_RECTANGLE].joystick.button = JOYSTICK_BUTTON_SELECT;
-    ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_REPLACE].joystick.button = JOYSTICK_BUTTON_RCLICK;
-    ENGINE.input_state.controls.inputs[INPUT_EDITOR_XRAYS].joystick.button = JOYSTICK_BUTTON_LCLICK;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_NEXT_CUBE].joystick.button = JOYSTICK_BUTTON_A;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_PREVIOUS_CUBE].joystick.button = JOYSTICK_BUTTON_B;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_RECTANGLE].joystick.button = JOYSTICK_BUTTON_Y;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_REPLACE].joystick.button = JOYSTICK_BUTTON_X;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_XRAYS].joystick.button = JOYSTICK_BUTTON_RCLICK;
 
     ENGINE.input_state.controls.inputs[INPUT_UP].keyboard.key = sfKeyZ;
     ENGINE.input_state.controls.inputs[INPUT_DOWN].keyboard.key = sfKeyS;
@@ -43,6 +41,8 @@ void engine_input_initialize(void)
             ENGINE.input_state.controls.inputs[i].keyboard.keys_additional[j] = false;
         ENGINE.input_state.pressing[i] = 0;
     }
+    for (unsigned int i = 0; i < sfJoystickAxisCount; i++)
+        ENGINE.input_state.joystick_axis[i] = 0;
     ENGINE.input_state.joystick = 0;
     set_default_inputs();
 }

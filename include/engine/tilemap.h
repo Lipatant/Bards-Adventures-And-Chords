@@ -12,8 +12,8 @@
     #define TILE_HEIGHT 10
     #define TILE_FLAT_X 16
     #define TILE_FLAT_Y 8
-    #define TILEMAP_MAX_X 40
-    #define TILEMAP_MAX_Y 100
+    #define TILEMAP_MAX_X 10
+    #define TILEMAP_MAX_Y 10
     #define TILEMAP_MAX_Z 20
 
     #include "engine/tilemap/types.h"
@@ -43,18 +43,18 @@ static const tile_propreties_t TILE_DATAS[] = {
     {27, "SNOW layer", false, true, 0, 2},
     {28, "HAY bale", false, false, 0, 10},
     {29, "HAY", false, false, 0, 10},
-    {20, "ORANGE GRASS on DIRT 1", false, false, 0, 10},
-    {21, "ORANGE GRASS on DIRT 2", false, false, 0, 10},
-    {22, "ORANGE GRASS on DIRT slab", false, true, 0, 6},
-    {23, "WATER full", false, false, 0, 10},
-    {24, "WATER", false, true, 0, 8},
-    {25, "LAVA full", false, false, 0, 10},
-    {26, "LAVA", false, true, 0, 8},
-    {27, "ACID full", false, false, 0, 10},
-    {28, "ACID", false, true, 0, 8},
+    {30, "ORANGE GRASS on DIRT 1", false, false, 0, 10},
+    {31, "ORANGE GRASS on DIRT 2", false, false, 0, 10},
+    {32, "ORANGE GRASS on DIRT slab", false, true, 0, 6},
+    {33, "WATER full", false, false, 0, 10},
+    {34, "WATER", false, true, 0, 8},
+    {35, "LAVA full", false, false, 0, 10},
+    {36, "LAVA", false, true, 0, 8},
+    {37, "ACID full", false, false, 0, 10},
+    {38, "ACID", false, true, 0, 8},
 };
 
-static const tile_t TILE_DATAS_TOTAL = sizeof(TILE_DATAS) / sizeof(tile_propreties_t);
+static const unsigned long TILE_DATAS_TOTAL = (sizeof(TILE_DATAS) / sizeof(tile_propreties_t));
 
 static const sfVector2u TILE_TEXTURES_OFFSET = {2, 0};
 static const sfVector2u TILE_TEXTURES_OFFSET_AFTER = {1, 0};
@@ -64,3 +64,7 @@ static const sfVector2u TILE_TEXTURES_SIZE = {18, 18};
 // Returns the cleared tilemap
 // Returns NULL if a problem is encountered
 tilemap_t *engine_tilemap_reset(tilemap_t *tilemap);
+// Returns the found tile_propreties.
+// Returns the first one if a problem is encountered.
+/// \param tile_id Id of the tile
+tile_propreties_t engine_tilemap_get_tile_propreties(tile_t tile_id);

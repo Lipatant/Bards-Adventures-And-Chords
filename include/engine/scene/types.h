@@ -10,6 +10,8 @@
     #include "engine/tilemap/types.h"
     #include "engine/types.h"
 
+    #define SCENE_LEVEL_EDITOR_DEFAULT_TILE_POSITION 0
+
 typedef struct loaded_map_s loaded_map_t;
 typedef struct position_tile_s position_tile_t;
 
@@ -17,6 +19,7 @@ typedef struct scene_level_editor_s {
     loaded_map_t *loaded_map;
     position_tile_t selector;
     position_tile_t marker;
+    unsigned int actual_tile_position;
     tile_propreties_t tile_proprety;
     int window_layer;
 } scene_level_editor_t;

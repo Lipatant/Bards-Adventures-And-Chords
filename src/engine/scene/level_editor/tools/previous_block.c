@@ -1,14 +1,11 @@
 /*
 ** BARDS - VIRGILE (LIPATANT) BERRIER, 2022
-** engine/scene/level_editor/create.c
+** engine/scene/level_editor/tools/previous_block.c
 ** File description:
-** Creates a new scene for level editing
+** Go to the previous block
 */
 
 #include "engine/scene/types.h"
-#include "engine/loaded_map.h"
-#include "engine/tilemap.h"
-#include "engine/window.h"
 
 static void set_tile_proprety(scene_t *scene, unsigned int id)
 {
@@ -26,19 +23,12 @@ static void set_tile_proprety(scene_t *scene, unsigned int id)
     scene->data.level_editor.actual_tile_position = id;
 }
 
-void engine_scene_level_editor_create(scene_t *scene)
+tile_t engine_scene_level_editor_tools_previous_block(scene_t *scene)
 {
-    if (scene == NULL)
-        return;
-    if (scene->data.level_editor.loaded_map != NULL)
-        engine_loaded_map_free(scene->data.level_editor.loaded_map);
-    scene->data.level_editor.loaded_map = engine_loaded_map_create();
-    scene->data.level_editor.window_layer = WINDOW_LAYER_DEFAULT_WINDOW;
-    scene->data.level_editor.selector.x = 0;
-    scene->data.level_editor.selector.y = 0;
-    scene->data.level_editor.selector.z = 0;
-    scene->data.level_editor.marker.x = 0;
-    scene->data.level_editor.marker.y = 0;
-    scene->data.level_editor.marker.z = 0;
-    set_tile_proprety(scene, SCENE_LEVEL_EDITOR_DEFAULT_TILE_POSITION);
+    unsigned int id = scene->data.level_editor.actual_tile_position;
+
+    if (id < 1)
+        id += TILE_DATAS_TOTAL;
+    id -= 1;
+    set_tile_proprety(scene, id);
 }
