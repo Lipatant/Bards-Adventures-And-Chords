@@ -6,6 +6,7 @@
 ##
 
 SRC	=	../main.c															\
+	engine/generation/perlin_noise/2d.c										\
 	engine/input/initialize.c												\
 	engine/input/is_held.c													\
 	engine/input/is_pressed.c												\
@@ -16,6 +17,8 @@ SRC	=	../main.c															\
 	engine/loaded_map/free.c												\
 	engine/loaded_map/view_angle/rotate.c									\
 	engine/map/create.c														\
+	engine/map/file/load.c													\
+	engine/map/file/write.c													\
 	engine/map/free.c														\
 	engine/scene/call.c														\
 	engine/scene/create.c													\
@@ -24,11 +27,13 @@ SRC	=	../main.c															\
 	engine/scene/level_editor/tick.c										\
 	engine/scene/level_editor/tools/fill/rectangle.c						\
 	engine/scene/level_editor/tools/fill/replace.c							\
+	engine/scene/level_editor/tools/load_file.c								\
 	engine/scene/level_editor/tools/next_block.c							\
-	engine/scene/level_editor/tools/previous_block.c							\
+	engine/scene/level_editor/tools/previous_block.c						\
 	engine/scene/free.c														\
 	engine/sprite/create/from_file.c										\
 	engine/sprite/destroy.c													\
+	engine/tilemap/get_tile_propreties.c									\
 	engine/tilemap/reset.c													\
 	engine/window/create.c													\
 	engine/window/destroy.c													\

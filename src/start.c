@@ -65,8 +65,8 @@ int start(int const ac, char * const *av, char * const *env)
         if (ENGINE.seconds_clock != NULL) {
             float current_time = sfTime_asSeconds(sfClock_restart(ENGINE.seconds_clock));
             double fps = (float)(1.0) / (current_time - ENGINE.seconds_time);
-            my_putdouble(fps, 2);
-            my_putstr("\n");
+            //my_putdouble(fps, 2);
+            //my_putstr("\n");
         }
         engine_input_update();
         float speed = (float)(10) * ((float)ENGINE.delta / SECONDS_TO_MILLISECONDS);

@@ -6,11 +6,8 @@
 */
 
 #pragma once
-    #include "engine/tilemap.h"
-
-typedef struct __attribute__((packed))map_s {
-    tilemap_t tilemap;
-} map_t;
+    #include "engine/map/file.h"
+    #include "engine/map/types.h"
 
 // Returns the generated map
 // Returns NULL if a problem is encountered

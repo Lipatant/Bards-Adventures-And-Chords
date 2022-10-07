@@ -35,8 +35,8 @@ static sfView *correct_view(window_layers_t *window)
     view_rect.height *= ratio.y;
     view_rect.left += (1 - view_rect.width) / 2;
     view_rect.top += (1 - view_rect.height) / 2;
-    view_size.x = DEFAULT_WINDOW_RESOLUTION.x;
-    view_size.y = DEFAULT_WINDOW_RESOLUTION.y;
+    view_size.x = DEFAULT_WINDOW_RESOLUTION.x * 2;
+    view_size.y = DEFAULT_WINDOW_RESOLUTION.y * 2;
     sfView_setSize(window->view, view_size);
     sfView_setViewport(window->view, view_rect);
     return window->view;

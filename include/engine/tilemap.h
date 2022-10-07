@@ -12,8 +12,8 @@
     #define TILE_HEIGHT 10
     #define TILE_FLAT_X 16
     #define TILE_FLAT_Y 8
-    #define TILEMAP_MAX_X 10
-    #define TILEMAP_MAX_Y 10
+    #define TILEMAP_MAX_X 20
+    #define TILEMAP_MAX_Y 20
     #define TILEMAP_MAX_Z 20
 
     #include "engine/tilemap/types.h"

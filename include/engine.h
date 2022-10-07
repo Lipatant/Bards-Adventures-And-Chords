@@ -11,6 +11,7 @@
     #include "engine/input.h"
     #include "engine/loaded_map.h"
     #include "engine/map.h"
+    #include "engine/generation.h"
     #include "engine/scene.h"
     #include "engine/sprite.h"
     #include "engine/struct.h"

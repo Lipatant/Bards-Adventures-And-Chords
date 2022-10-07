@@ -9,6 +9,7 @@
 #include "engine/loaded_map.h"
 #include "engine/scene/level_editor.h"
 #include "engine/scene/types.h"
+#include "engine/struct.h"
 #include "my.h"
 
 static void place_marker(scene_t *scene)
@@ -32,6 +33,10 @@ static void placement_inputs(scene_t *scene)
         engine_scene_level_editor_tools_fill_rectangle(scene, scene->data.level_editor.tile_proprety.id);
     if (engine_input_is_pressed(INPUT_EDITOR_FILL_REPLACE))
         engine_scene_level_editor_tools_fill_replace(scene, scene->data.level_editor.tile_proprety.id);
+    if (engine_input_is_pressed(INPUT_EDITOR_SAVE))
+        engine_map_file_write(scene->data.level_editor.loaded_map->map, "saved.bmap");
+    if (engine_input_is_pressed(INPUT_EDITOR_LOAD))
+        engine_scene_level_editor_tools_load_file(scene, "saved.bmap");
 }
 
 static void manage_inputs(scene_t *scene)
@@ -77,7 +82,8 @@ void engine_scene_level_editor_tick(scene_t *scene)
 {
     if (scene == NULL)
         return;
-    manage_inputs(scene);
+    if (ENGINE.windows[scene->data.level_editor.window_layer].has_focus)
+        manage_inputs(scene);
     if (scene->data.level_editor.loaded_map != NULL)
         on_loaded_map(scene);
 }

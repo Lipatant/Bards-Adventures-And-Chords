@@ -21,6 +21,8 @@ static void set_default_inputs(void)
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_RECTANGLE].joystick.button = JOYSTICK_BUTTON_Y;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_FILL_REPLACE].joystick.button = JOYSTICK_BUTTON_X;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_XRAYS].joystick.button = JOYSTICK_BUTTON_RCLICK;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_SAVE].joystick.button = JOYSTICK_BUTTON_SCREENSHOT;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_LOAD].joystick.button = JOYSTICK_BUTTON_SELECT;
 
     ENGINE.input_state.controls.inputs[INPUT_UP].keyboard.key = sfKeyZ;
     ENGINE.input_state.controls.inputs[INPUT_DOWN].keyboard.key = sfKeyS;
