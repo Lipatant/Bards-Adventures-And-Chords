@@ -63,7 +63,8 @@ static void manage_inputs(scene_t *scene)
     if (engine_input_is_pressed(INPUT_EDITOR_NEXT_CUBE))
         engine_scene_level_editor_tools_next_block(scene);
     if (engine_input_is_pressed(INPUT_EDITOR_PREVIOUS_CUBE))
-        engine_scene_level_editor_tools_previous_block(scene);
+//        engine_scene_level_editor_tools_previous_block(scene);
+        engine_tilemap_reset(&scene->data.level_editor.loaded_map->map->tilemap);
     placement_inputs(scene);
 }
 
