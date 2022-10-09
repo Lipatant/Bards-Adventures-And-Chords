@@ -5,20 +5,12 @@
 ** Adds a new map and returns it
 */
 
-#include "engine/generation/perlin_noise.h"
 #include "engine/tilemap.h"
+#include "utility/free.h"
+#include "utility/generation/perlin_noise.h"
 #include "my.h"
 #include <stdlib.h>
 #include <time.h>
-
-static void free_float_2d(float **array, unsigned int const width)
-{
-    if (array == NULL)
-        return;
-    for (unsigned int x = 0; x < width; x++)
-        free(array[x]);
-    free(array);
-}
 
 static short set_tile(unsigned int const x, unsigned int const y, unsigned int const z, float const max_z)
 {
@@ -40,19 +32,25 @@ static void random_generation(tilemap_t *tilemap)
     unsigned int seed = (unsigned int)time(NULL) + (long)tilemap;
     float max_z = 0;
     float **random_values = NULL;
+    float minimal_value = 0;
 
     srand(seed);
-    random_values = engine_generation_perlin_noise_2d(TILEMAP_MAX_X, TILEMAP_MAX_Y, 3, 1.5, seed);
+    random_values = utility_generation_perlin_noise_2d(TILEMAP_MAX_X, TILEMAP_MAX_Y, 4, 2.0, seed);
     if (random_values == NULL)
         return;
+    minimal_value = random_values[0][0];
+    for (unsigned int x = 0; x < TILEMAP_MAX_X; x++)
+        for (unsigned int y = 0; y < TILEMAP_MAX_Y; y++)
+            if (random_values[x][y] < minimal_value)
+                minimal_value = random_values[x][y];
     for (unsigned int x = 0; x < TILEMAP_MAX_X; x++) {
         for (unsigned int y = 0; y < TILEMAP_MAX_Y; y++) {
-            max_z = MIN((random_values[x][y] / 2) * TILEMAP_MAX_Z, 1);
+            max_z = MIN(((random_values[x][y] - (minimal_value - ((float)1 / TILEMAP_MAX_Z)))) * TILEMAP_MAX_Z * 0.5, 1);
             for (unsigned int z = 0; z < (unsigned int)max_z; z++)
                 tilemap->tile[x][y][z] = set_tile(x, y, z, max_z);
         }
     }
-    free_float_2d(random_values, TILEMAP_MAX_X);
+    utility_free_float_2d(random_values, TILEMAP_MAX_X);
 }
 
 tilemap_t *engine_tilemap_reset(tilemap_t *tilemap)

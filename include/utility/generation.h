@@ -1,9 +1,10 @@
 /*
 ** BARDS - VIRGILE (LIPATANT) BERRIER, 2022
-** engine/input.h
+** utility/input.h
 ** File description:
-** Includes everything used for the engine
+** Includes functions used for random generations (numbers, noises...)
 */
 
 #pragma once
+    #include "generation/hash.h"
     #include "generation/perlin_noise.h"

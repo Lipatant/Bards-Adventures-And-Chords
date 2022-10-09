@@ -15,5 +15,6 @@ void engine_scene_call(scene_t *scene, scene_call_id_t const scene_call_id)
         return;
     if (scene->type < 0 || scene->type >= SCENE_CALL_TOTAL)
         return;
-    SCENE_FUNCTIONS[scene->type][scene_call_id](scene);
+    if (SCENE_FUNCTIONS[scene->type][scene_call_id] != NULL)
+        SCENE_FUNCTIONS[scene->type][scene_call_id](scene);
 }

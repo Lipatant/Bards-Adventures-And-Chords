@@ -9,6 +9,7 @@
     #include "engine/loaded_map.h"
     #include "engine/tilemap/types.h"
     #include "engine/types.h"
+    #include <SFML/Network/IpAddress.h>
 
     #define SCENE_LEVEL_EDITOR_DEFAULT_TILE_POSITION 0
 
@@ -23,6 +24,11 @@ typedef struct scene_level_editor_s {
     tile_propreties_t tile_proprety;
     int window_layer;
 } scene_level_editor_t;
+
+typedef struct scene_server_s {
+    sfIpAddress ip_address;
+    unsigned short port;
+} scene_server_t;
 
 typedef enum {
     SCENE_TYPE_LEVEL_EDITOR,
@@ -42,5 +48,6 @@ typedef struct scene_s {
     scene_type_t type;
     union {
         scene_level_editor_t level_editor;
+        scene_server_t server;
     } data;
 } scene_t;

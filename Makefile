@@ -6,7 +6,6 @@
 ##
 
 SRC	=	../main.c															\
-	engine/generation/perlin_noise/2d.c										\
 	engine/input/initialize.c												\
 	engine/input/is_held.c													\
 	engine/input/is_pressed.c												\
@@ -43,6 +42,8 @@ SRC	=	../main.c															\
 	engine/window/view/set_center.c											\
 	engine/window/view/set_center/vector.c									\
 	start.c																	\
+	utility/free/float_2d.c									\
+	utility/generation/perlin_noise/2d.c									\
 
 BUILDDIR = build
 
