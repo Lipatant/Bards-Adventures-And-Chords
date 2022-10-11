@@ -7,6 +7,8 @@
 
 #pragma once
     #include "engine/scene/level_editor.h"
+    #include "engine/scene/main_menu.h"
+    #include "engine/scene/server.h"
     #include "engine/scene/types.h"
 
 // Returns the generated scene.
@@ -20,5 +22,7 @@ void engine_scene_call(scene_t *scene, scene_call_id_t const scene_function_id);
 void engine_scene_free(scene_t *scene);
 
 static void (*SCENE_FUNCTIONS[SCENE_TYPE_TOTAL][SCENE_CALL_TOTAL])(scene_t *scene) = {
-    {engine_scene_level_editor_create, engine_scene_level_editor_free, engine_scene_level_editor_tick}
+    {engine_scene_level_editor_create, engine_scene_level_editor_free, engine_scene_level_editor_tick},
+    {NULL, NULL, NULL},
+    {engine_scene_main_menu_create, engine_scene_main_menu_free, engine_scene_main_menu_tick},
 };

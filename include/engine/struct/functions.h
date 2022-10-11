@@ -1,10 +1,11 @@
 /*
 ** BARDS - VIRGILE (LIPATANT) BERRIER, 2022
-** engine.h
+** engine/struct/functions.h
 ** File description:
 ** Includes everything used for the engine
 */
 
 #pragma once
-    #include "engine/struct/functions.h"
-    #include "engine/struct/global.h"
+
+void engine_struct_free(void);
+void engine_struct_initialize(void);

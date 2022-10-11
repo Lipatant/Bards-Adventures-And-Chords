@@ -32,6 +32,7 @@ static void set_default_inputs(void)
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_DOWN].keyboard.key = sfKeyA;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_PLACE].keyboard.key = sfKeySpace;
     ENGINE.input_state.controls.inputs[INPUT_EDITOR_ERASE].keyboard.key = sfKeyX;
+    ENGINE.input_state.controls.inputs[INPUT_EDITOR_PREVIOUS_CUBE].keyboard.key = sfKeyR;
 }
 
 void engine_input_initialize(void)

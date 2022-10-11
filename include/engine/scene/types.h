@@ -9,6 +9,9 @@
     #include "engine/loaded_map.h"
     #include "engine/tilemap/types.h"
     #include "engine/types.h"
+    #include <SFML/Graphics/Font.h>
+    #include <SFML/Graphics/Sprite.h>
+    #include <SFML/Graphics/Texture.h>
     #include <SFML/Network/IpAddress.h>
 
     #define SCENE_LEVEL_EDITOR_DEFAULT_TILE_POSITION 0
@@ -22,7 +25,7 @@ typedef struct scene_level_editor_s {
     position_tile_t marker;
     unsigned int actual_tile_position;
     tile_propreties_t tile_proprety;
-    int window_layer;
+    unsigned int window_layer;
 } scene_level_editor_t;
 
 typedef struct scene_server_s {
@@ -30,8 +33,17 @@ typedef struct scene_server_s {
     unsigned short port;
 } scene_server_t;
 
+typedef struct scene_main_menu_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfFont *font;
+    unsigned int window_layer;
+} scene_main_menu_t;
+
 typedef enum {
     SCENE_TYPE_LEVEL_EDITOR,
+    SCENE_TYPE_SERVER,
+    SCENE_TYPE_MAIN_MENU,
     SCENE_TYPE_TOTAL,
 } scene_type_t;
 
@@ -49,5 +61,6 @@ typedef struct scene_s {
     union {
         scene_level_editor_t level_editor;
         scene_server_t server;
+        scene_main_menu_t main_menu;
     } data;
 } scene_t;

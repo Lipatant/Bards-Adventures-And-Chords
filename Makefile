@@ -21,6 +21,7 @@ SRC	=	../main.c															\
 	engine/map/free.c														\
 	engine/scene/call.c														\
 	engine/scene/create.c													\
+	engine/scene/free.c														\
 	engine/scene/level_editor/create.c										\
 	engine/scene/level_editor/free.c										\
 	engine/scene/level_editor/tick.c										\
@@ -29,9 +30,13 @@ SRC	=	../main.c															\
 	engine/scene/level_editor/tools/load_file.c								\
 	engine/scene/level_editor/tools/next_block.c							\
 	engine/scene/level_editor/tools/previous_block.c						\
-	engine/scene/free.c														\
+	engine/scene/main_menu/create.c											\
+	engine/scene/main_menu/free.c											\
+	engine/scene/main_menu/tick.c											\
 	engine/sprite/create/from_file.c										\
 	engine/sprite/destroy.c													\
+	engine/struct/free.c													\
+	engine/struct/initialize.c												\
 	engine/tilemap/get_tile_propreties.c									\
 	engine/tilemap/reset.c													\
 	engine/window/create.c													\
