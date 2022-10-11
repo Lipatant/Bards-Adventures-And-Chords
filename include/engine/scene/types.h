@@ -6,6 +6,7 @@
 */
 
 #pragma once
+    #include "engine/button/types.h"
     #include "engine/loaded_map.h"
     #include "engine/tilemap/types.h"
     #include "engine/types.h"
@@ -33,10 +34,19 @@ typedef struct scene_server_s {
     unsigned short port;
 } scene_server_t;
 
+enum scene_main_menu_buttons_indices {
+    SCENE_MAIN_MENU_BUTTON_CAMPAIN,
+    SCENE_MAIN_MENU_BUTTON_DUNGEON_MANIA,
+    SCENE_MAIN_MENU_BUTTON_PVP,
+    SCENE_MAIN_MENU_BUTTON_SETTINGS,
+    SCENE_MAIN_MENU_BUTTON_EXIT,
+    SCENE_MAIN_MENU_BUTTON_TOTAL,
+};
+
 typedef struct scene_main_menu_s {
-    sfSprite *sprite;
-    sfTexture *texture;
     sfFont *font;
+    sprite_t *sprite;
+    button_t *button[SCENE_MAIN_MENU_BUTTON_TOTAL];
     unsigned int window_layer;
 } scene_main_menu_t;
 

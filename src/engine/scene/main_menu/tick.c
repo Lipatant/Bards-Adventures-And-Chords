@@ -16,13 +16,14 @@ static void display_text(scene_t *scene, window_layers_t *window)
     sfText *text = NULL;
     sfVector2f scale = {0.4, 0.4};
 
-    if (scene->data.main_menu.font == NULL)  
+    if (scene->data.main_menu.font == NULL)
         return;
     text = sfText_create();
     sfText_setFont(text, scene->data.main_menu.font);
     sfText_setString(text, "Host\n\nJoin");
     sfText_setScale(text, scale);
     sfRenderWindow_drawText(window->render_window, text, NULL);
+    sfText_destroy(text);
 }
 
 void engine_scene_main_menu_tick(scene_t *scene)
@@ -38,5 +39,6 @@ void engine_scene_main_menu_tick(scene_t *scene)
         return;
     engine_window_view_set_center(window_layer, 0, 0);
     engine_window_update_view(window_layer);
-    display_text(scene, &ENGINE.windows[window_layer]);
+    for (unsigned int i = 0; i < SCENE_MAIN_MENU_BUTTON_TOTAL; i++)
+        display_text(scene, &ENGINE.windows[window_layer]);
 }

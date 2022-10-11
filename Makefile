@@ -6,6 +6,8 @@
 ##
 
 SRC	=	../main.c															\
+	engine/button/create.c													\
+	engine/button/free.c													\
 	engine/input/initialize.c												\
 	engine/input/is_held.c													\
 	engine/input/is_pressed.c												\

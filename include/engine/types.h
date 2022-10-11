@@ -19,6 +19,7 @@ typedef struct position_tile_s {
     int z;
 } position_tile_t;
 
+    #include "engine/button/types.h"
     #include "engine/sprite/types.h"
     #include "engine/scene/types.h"
     #include "engine/tilemap/types.h"
