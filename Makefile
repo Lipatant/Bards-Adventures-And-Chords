@@ -18,6 +18,8 @@ $(BUILDDIR)/%.o: 	src/%.cpp
 
 NAME	=	bards
 
+LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
+
 IDIR	=	include
 
 CPPFLAGS	=	-I$(IDIR) -I./include
