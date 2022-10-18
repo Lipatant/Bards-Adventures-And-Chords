@@ -47,6 +47,14 @@ namespace BARD_UTILITY_NAMESPACE
             _values[position.x % _width][position.y % _height] = value;
             return false;
         }
+        float getValue(sf::Vector2u const position, bool const wrap = false)
+        {
+            if (isEmpty())
+                return 0;
+            if (position.x >= _width && position.y >= _height && !wrap)
+                return 0;
+            return _values[position.x % _width][position.y % _height];
+        }
         bool perlin_noise(unsigned int const octaves, float const bias, unsigned int const seed);
         float **&getValues(void) { return _values; };
         unsigned int getWidth(void) { return _width; };
