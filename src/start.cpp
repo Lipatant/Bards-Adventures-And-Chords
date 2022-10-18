@@ -8,28 +8,50 @@
 #include "returned.hpp"
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "utility/strings.hpp"
-#include "engine.hpp"
+#include "engine/window/layer.hpp"
+#include "utility/generation/perlin_noise.hpp"
+
+sf::Color getColor(float const value)
+{
+    sf::Color color = sf::Color::Black;
+    sf::Int8 color_value = 0;
+
+    color_value = value * 255;
+    if (value <= 0.0)
+        color_value = 0;
+    if (value >= 1.0)
+        color_value = 255;
+    color.r = color_value;
+    color.g = color_value;
+    color.b = color_value;
+    return color;
+}
 
 int start(int const ac, char *av[], char *env[])
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    engine::WindowLayer_c WindowLayer;
+    sf::RectangleShape shape;
+    engine::WindowLayer_c windowLayer;
+    utility::GenerationOuput2f_c output(DEFAULT_WINDOW_RESOLUTION);
 
-    while (WindowLayer.getRenderWindow().isOpen())
+    shape.setSize({1, 1});
+    output.perlin_noise(7, 1.5, std::time(nullptr));
+    while (windowLayer.getRenderWindow().isOpen())
     {
-        sf::Event event;
-        while (WindowLayer.getRenderWindow().pollEvent(event))
+        windowLayer.update();
+        windowLayer.getRenderWindow().clear();
+        for (unsigned int x = 0; x < DEFAULT_WINDOW_RESOLUTION.x; x++)
         {
-            if (event.type == sf::Event::Closed)
-                WindowLayer.getRenderWindow().close();
+            for (unsigned int y = 0; y < DEFAULT_WINDOW_RESOLUTION.y; y++)
+            {
+                shape.setFillColor(getColor(output.getValues()[x][y]));
+                shape.setPosition({(float)x, (float)y});
+                windowLayer.getRenderWindow().draw(shape);
+            }
         }
-        WindowLayer.getRenderWindow().clear();
-        WindowLayer.getRenderWindow().draw(shape);
-        WindowLayer.getRenderWindow().display();
+        windowLayer.getRenderWindow().display();
     }
-    WindowLayer.destroy();
+    windowLayer.destroy();
+    output.destroy();
     return RETURNED_EXIT;
 }

@@ -5,8 +5,10 @@
 ## Makefile de Bard: Adventures and Chors
 ##
 
-SRC	=	./main.cpp															\
+SRC	=	./engine/window/layer.cpp											\
+		./main.cpp															\
 		./start.cpp															\
+		./utility/generation/perlin_noise/2d.cpp							\
 
 BUILDDIR = build
 
