@@ -39,7 +39,7 @@ namespace BARD_UTILITY_NAMESPACE
             for (unsigned int y = 0; y < _height; y++)
             {
                 starting_hash = (starting_hash + rand()) % BARD_UTILITY_NAMESPACE::HASH_SIZE;
-                srand(seed + HASH[(x * _width + y + starting_hash) % BARD_UTILITY_NAMESPACE::HASH_SIZE] + std::rand());
+                srand(seed + BARD_UTILITY_NAMESPACE::HASH[(x * _width + y + starting_hash) % BARD_UTILITY_NAMESPACE::HASH_SIZE] + std::rand());
                 seeds.setValue({x, y}, (float)rand() / RAND_MAX, true);
             }
         }

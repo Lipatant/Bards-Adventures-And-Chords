@@ -8,8 +8,10 @@
 #include "returned.hpp"
 
 #include <SFML/Graphics.hpp>
-#include "utility/strings.hpp"
+#include <SFML/Window/Keyboard.hpp>
 #include "engine/window/layer.hpp"
+#include "engine/ui/button.hpp"
+#include "utility/strings.hpp"
 #include "utility/generation/perlin_noise.hpp"
 
 sf::Color getColor(float const value, float const zone)
@@ -38,12 +40,19 @@ int start(int const ac, char *av[], char *env[])
     engine::WindowLayer_c windowLayer;
     utility::GenerationOuput2f_c output(DEFAULT_WINDOW_RESOLUTION);
     utility::GenerationOuput2f_c output_zones(DEFAULT_WINDOW_RESOLUTION);
+    time_t seed = 0;
+    engine::Button_c button("Campain",
+                            "graphics/fonts/Aileron-Bold.otf", &windowLayer);
 
     shape.setSize({1, 1});
-    output.perlin_noise(7, 1.5, std::time(nullptr));
-    output_zones.perlin_noise(5, 1.5, (std::time(nullptr) * 2) + 1);
     while (windowLayer.getRenderWindow().isOpen())
     {
+        if (seed != std::time(NULL) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || seed == 0))
+        {
+            seed = std::time(NULL);
+            output.perlin_noise(7, 1.5, seed);
+            output_zones.perlin_noise(5, 1.5, seed * 2 + 1);
+        }
         windowLayer.update();
         windowLayer.getRenderWindow().clear();
         for (unsigned int x = 0; x < DEFAULT_WINDOW_RESOLUTION.x; x++)
@@ -55,9 +64,11 @@ int start(int const ac, char *av[], char *env[])
                 windowLayer.getRenderWindow().draw(shape);
             }
         }
+        button.display();
         windowLayer.getRenderWindow().display();
     }
     windowLayer.destroy();
     output.destroy();
+    output_zones.destroy();
     return RETURNED_EXIT;
 }
