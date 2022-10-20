@@ -10,5 +10,5 @@
 
 namespace BARD_ENGINE_NAMESPACE
 {
-    static const char TILE = 8;
+    static const char TILE = 16;
 }

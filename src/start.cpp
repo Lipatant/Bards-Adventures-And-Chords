@@ -10,13 +10,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include "engine/window/layer.hpp"
+#include "engine/ui/box.hpp"
 #include "engine/ui/button.hpp"
 #include "utility/strings.hpp"
 #include "utility/generation/perlin_noise.hpp"
 
 sf::Color getColor(float const value, float const zone)
 {
-    float coloredZones[][3] = {{1, 0, 0}, {1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
+    float coloredZones[][3] = {{1, 1, 1}};/*{{1, 0, 0}, {1, 1, 0}, {0, 1, 1}, {0, 0, 1}};*/
     sf::Color color = sf::Color::Black;
     sf::Int8 color_value = 0;
     int coloredZonesValue = 0;
@@ -41,9 +42,10 @@ int start(int const ac, char *av[], char *env[])
     utility::GenerationOuput2f_c output(DEFAULT_WINDOW_RESOLUTION);
     utility::GenerationOuput2f_c output_zones(DEFAULT_WINDOW_RESOLUTION);
     time_t seed = 0;
-    engine::Button_c button("Campain",
+    engine::UIButton_c button("Campain",
                             "graphics/fonts/Aileron-Bold.otf", &windowLayer);
 
+    button.getUIBox().setSizeTile({5, 1});
     shape.setSize({1, 1});
     while (windowLayer.getRenderWindow().isOpen())
     {

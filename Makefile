@@ -5,7 +5,10 @@
 ## Makefile de Bard: Adventures and Chors
 ##
 
-SRC	=	./engine/window/layer.cpp											\
+SRC	=	./engine/ui/box.cpp													\
+		./engine/ui/button.cpp												\
+		./engine/window/layer.cpp											\
+		./engine/window/layer/update.cpp									\
 		./main.cpp															\
 		./start.cpp															\
 		./utility/generation/perlin_noise/2d.cpp							\
@@ -57,4 +60,7 @@ play:	$(NAME)
 
 re:	fclean all
 
-.PHONY: all debug debug_play fclean clean play re
+play_re: re
+	./$(NAME)
+
+.PHONY: all debug debug_play fclean clean play re play_re

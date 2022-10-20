@@ -6,4 +6,5 @@
 */
 
 #pragma once
+#include "engine/ui/box.hpp"
 #include "engine/ui/button.hpp"
